@@ -44,6 +44,7 @@ var Url = mongoose.model('Url', urlSchema);
 
 
 
+
 //This function takes a url, then counts the documents in the collection,
 //then trys to find a document with that url, then, if it doesn't, creates
 //a new Url document setting the original_url property to the url argument
@@ -81,63 +82,6 @@ function grand(url) {
     })
   })
 }
-
-/*
-Url.findOne({short_url: 3}, function(err, doc) {
-  if (err) {console.log(err)};
-  console.log(doc);
-})
-*/
-
-
-//grand(testUrl3);
-
-
-/*
-new Url({
-  original_url: "https://oscarfabian.com",
-  short_url: 2
-}).save(function (err, product) {
-  if (err) {
-    console.log('error: ' + err);
-  }
-  console.log('product: ' + product)
-  return product;
-});
-*/
-
-
-/*
-var countt;
-
-Url.countDocuments(function(err, data) {
-  if (err) {
-    return err;
-  }
-  console.log('data2: ' + data);
-  countt = data;
-  return data;
-})
-
-console.log('countt: ' + countt);
-*/
-
-
-
-/*
-Url.find({original_url: "https://oscarfabian.com"}, function(err, data) {
-  if (err) {console.log('err1: ' + err)};
-  if (data == '') {
-    testUrl.save(function (err, product) {
-    if (err) { console.log('error2: ' + err)};
-  console.log('product: ' + product)
-  return product;
-});
-  };
-  console.log('already exists: ' + data);
-  return data;
-})
-*/
 
 
   
@@ -186,7 +130,37 @@ app.route("/api/shorturl/new")
 })
 
 
+
+
+app.route("/api/shorturl/:short")
+.get(function(req, res) {
+  var short = req.params.short;
+  console.log('short: ' + short);
+  Url.findOne({short_url: short}, function(err, doc) {
+  if (err) {console.log('erer: ' + err)};
+  if (doc == null) {
+    res.json({error: "No short url found for given input"});
+  } else {
+    console.log('doc: ' + doc);
+    res.redirect(doc.original_url);
+  }
+})
+});
+
+
+
+app.listen(port, function () {
+  console.log('Node.js listening ...');
+});
+
+
+
+
 /*
+
+OLD /API/SHORTURL/NEW ROUTES
+
+
 app.route("/api/shorturl/new")
 .post(function(req, res) {
   var url = req.body.url;
@@ -215,10 +189,8 @@ app.route("/api/shorturl/new")
     }
   })
 })
-*/
 
 
-/*
 app.route("/api/shorturl/new")
 .post(function(req, res) {
   var url = req.body.url;
@@ -253,26 +225,7 @@ app.route("/api/shorturl/new")
     })
   })
 })
+
+
+
 */
-
-
-app.route("/api/shorturl/:short")
-.get(function(req, res) {
-  var short = req.params.short;
-  console.log('short: ' + short);
-  Url.findOne({short_url: short}, function(err, doc) {
-  if (err) {console.log('erer: ' + err)};
-  if (doc == null) {
-    res.json({error: "No short url found for given input"});
-  } else {
-    console.log('doc: ' + doc);
-    res.redirect(doc.original_url);
-  }
-})
-});
-
-
-
-app.listen(port, function () {
-  console.log('Node.js listening ...');
-});
