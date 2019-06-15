@@ -8,6 +8,12 @@ var dns = require('dns');
 var app = express();
 
 
+//This shows that I don't seem to need to require 'url.URL' to access the URL object
+const testUrl = new URL('http://www.gamefaqs.com');
+console.log(testUrl);
+
+
+//I don't know what this does or if I need it yet
 //app.use(cors());
 
 
@@ -23,8 +29,6 @@ app.get('/', function(req, res){
 });
 
 
-//
-var port = 3000;
 
 process.env.MONGO_URI = 'mongodb+srv://spartan539:popcorn1@cluster0-m1tag.mongodb.net/test?retryWrites=true&w=majority';
 
@@ -40,50 +44,6 @@ var urlSchema = new mongoose.Schema({
 
 var Url = mongoose.model('Url', urlSchema);
 
-
-
-
-
-//This function takes a url, then counts the documents in the collection,
-//then trys to find a document with that url, then, if it doesn't, creates
-//a new Url document setting the original_url property to the url argument
-//passed and sets the short_url property to one more than the number of
-//documents in the collection, then saves the new document.
-function grand(url) {
-  var doc = {
-    original_url: url,
-    short_url: 0
-  };
-  Url.countDocuments(function(err, count) {
-    if (err) {console.log('err1: ' + err)};
-    console.log('count: ' + count);
-    Url.find({original_url: url}, function(err, docs) {
-      if (err) {console.log('err2: ' + err)};
-      if (docs == '') {
-        new Url({
-          original_url: url,
-          short_url: count + 1
-        }).save(function (err, newDoc) {
-          if (err) { console.log('err3: ' + err)};
-          console.log('newDoc: ' + newDoc);
-          doc.short_url = count + 1;
-          console.log('doc:');
-          console.log(doc);
-          return doc;
-        });
-      } else {
-        console.log('already exists: ' + docs);
-        doc.short_url = docs[0].short_url;
-        console.log('doc:');
-        console.log(doc);
-        return doc;
-      }
-    })
-  })
-}
-
-
-  
 
 
 
@@ -136,24 +96,26 @@ app.route("/api/shorturl/:short")
   var short = req.params.short;
   console.log('short: ' + short);
   Url.findOne({short_url: short}, function(err, doc) {
-  if (err) {console.log('erer: ' + err)};
-  if (doc == null) {
-    res.json({error: "No short url found for given input"});
-  } else {
-    console.log('doc: ' + doc);
-    res.redirect(doc.original_url);
-  }
-})
+    if (err) {console.log('erer: ' + err)};
+    if (doc == null) {
+      res.json({error: "No short url found for given input"});
+    } else {
+      console.log('doc: ' + doc);
+      res.redirect(doc.original_url);
+    }
+  })
 });
 
 
 
-app.listen(port, function () {
+app.listen(3000, function () {
   console.log('Node.js listening ...');
 });
 
 
 
+
+//WRITE COMMENTS FOR ROUTES
 
 /*
 
