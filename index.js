@@ -132,10 +132,14 @@ app.route("/api/shorturl/:short")
 });
 
 
-// Answer not found to all the wrong routes
+// Custom 404 response for all wrong routes
 app.use(function(req, res, next){
+
+  //sets the status of the response to 404
   res.status(404);
-  res.type('txt').send('Not found');
+
+  //sends a text response indicating 404 
+  res.type('txt').send('Whoops! The page you requested was not found (404).');
 });
 
 
