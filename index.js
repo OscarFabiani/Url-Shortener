@@ -108,14 +108,24 @@ app.route("/api/shorturl/new")
 
 app.route("/api/shorturl/:short")
 .get(function(req, res) {
+
+  //variable for short property of params property of request object
   var short = req.params.short;
   console.log('short: ' + short);
+
+  //checks if the database collection contains a document with a matching short_url property
   Url.findOne({short_url: short}, function(err, doc) {
     if (err) {console.log('err: ' + err)};
+
+    //checks if the query is null (no matching document found) and sends an error json response
+    //if so
     if (doc == null) {
       res.json({error: "No short url found for given input"});
     } else {
       console.log('doc: ' + doc);
+
+      //calls the redirect method for the response object which redirects to the original_url
+      //of the matched document
       res.redirect(doc.original_url);
     }
   })
