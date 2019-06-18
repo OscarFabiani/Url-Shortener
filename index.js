@@ -1,16 +1,11 @@
 'use strict';
 
 var express = require('express');
-var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var dns = require('dns');
+
+
 var app = express();
-
-
-//This shows that I don't seem to need to require 'url.URL' to access the URL object
-const testUrl = new URL('http://www.gamefaqs.com');
-console.log(testUrl);
-
 
 // body-parser
 app.use(express.urlencoded({extended: false}));
@@ -24,19 +19,19 @@ app.get('/', function(req, res){
 });
 
 
-
+//setting environment variable for mongodb
 process.env.MONGO_URI = 'mongodb+srv://spartan539:popcorn1@cluster0-m1tag.mongodb.net/test?retryWrites=true&w=majority';
 
-
+//connecting to mongodb through mongoose
 mongoose.connect(process.env.MONGO_URI);
 
-
+//creating schema for url documents
 var urlSchema = new mongoose.Schema({
   original_url: {type: String, required: true},
   short_url: {type: Number}
 });
 
-
+//creating model for url documents
 var Url = mongoose.model('Url', urlSchema);
 
 
@@ -111,11 +106,14 @@ app.listen(3000, function () {
 
 
 //WRITE COMMENTS FOR ROUTES
-//FIRGURE OUT WHAT CORS IS
-//TEST REMOVING REQUIRE('MONGODB')
 //FINISH OPTIMIZING ROUTES
 //EXPLORE CHANGING FILE STRUCTURE
 //POSSIBLY REWORK INDEX.HTML AND STYLE.CSS
+
+
+
+
+
 
 /*
 
