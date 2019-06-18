@@ -4,17 +4,12 @@ var express = require('express');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var dns = require('dns');
-//var cors = require('cors');
 var app = express();
 
 
 //This shows that I don't seem to need to require 'url.URL' to access the URL object
 const testUrl = new URL('http://www.gamefaqs.com');
 console.log(testUrl);
-
-
-//I don't know what this does or if I need it yet
-//app.use(cors());
 
 
 // body-parser
@@ -116,6 +111,11 @@ app.listen(3000, function () {
 
 
 //WRITE COMMENTS FOR ROUTES
+//FIRGURE OUT WHAT CORS IS
+//TEST REMOVING REQUIRE('MONGODB')
+//FINISH OPTIMIZING ROUTES
+//EXPLORE CHANGING FILE STRUCTURE
+//POSSIBLY REWORK INDEX.HTML AND STYLE.CSS
 
 /*
 
