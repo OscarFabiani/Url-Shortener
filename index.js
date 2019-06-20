@@ -138,23 +138,20 @@ app.use(function(req, res, next){
   //sets the status of the response to 404
   res.status(404);
 
-  //sends a text response indicating 404 
-  res.type('txt').send('Whoops! The page you requested was not found (404).');
+  //sends a response indicating 404 
+  res.send('Whoops! The page you requested was not found (404).');
 });
 
 
-
+//listens on port 3000
 app.listen(3000, function () {
   console.log('Node.js listening ...');
 });
 
 
 
-
-//WRITE COMMENTS FOR ROUTES
-//EXPLORE CHANGING FILE STRUCTURE
-//EXPLORE CONVERTING CALLBACKS TO PROMISES
 //POSSIBLY REWORK INDEX.HTML AND STYLE.CSS
+//EXPLORE CONVERTING CALLBACKS TO PROMISES(PROMISIFY, ETC.)
 
 
 
