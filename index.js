@@ -20,7 +20,8 @@ app.get('/', function(req, res){
 
 
 //setting environment variable for mongodb
-process.env.MONGO_URI = 'mongodb+srv://spartan539:popcorn1@cluster0-m1tag.mongodb.net/test?retryWrites=true&w=majority';
+//CHANGE PASSWORD
+process.env.MONGO_URI = 'mongodb+srv://spartan539:password1@cluster0-m1tag.mongodb.net/test?retryWrites=true&w=majority';
 
 //connecting to mongodb through mongoose
 mongoose.connect(process.env.MONGO_URI);
